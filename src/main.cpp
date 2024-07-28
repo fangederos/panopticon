@@ -22,8 +22,13 @@ int main() {
     bool running = true;
     while (running) {
         clear(); // Clear the screen
+
+        // Ensure print statements are correct and in the right order
         mvprintw(0, 0, "Welcome to Task Manager MVP!");
-        mvprintw(1, 0, "Press 'q' to quit.");
+        mvprintw(1, 0, "Use the arrow keys to move between tasks");
+        mvprintw(2, 0, "Press 'SPACE' to checkmark boxes.");
+        mvprintw(3, 0, "Press 'q' to quit.");
+
         ui.displayMainMenu(currentTask); // Display the main menu with the current task highlighted
         refresh(); // Refresh the screen to show changes
 
