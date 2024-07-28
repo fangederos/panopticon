@@ -2,6 +2,8 @@
 #include "ui.h"
 #include "task_manager.h"
 
+TaskManager taskManager; // Define the taskManager object
+
 // Main function to initialize the application
 int main() {
     // Initialize ncurses
@@ -10,9 +12,11 @@ int main() {
     noecho();             // Disable echoing of typed characters
     keypad(stdscr, TRUE); // Enable function keys
 
-    // Initialize UI and Task Manager
+    // Initialize UI
     UI ui;
-    TaskManager taskManager;
+
+    int currentTask = 0; // Index of the currently selected task
+    int ch;
 
     // Main loop
     bool running = true;
@@ -20,13 +24,26 @@ int main() {
         clear(); // Clear the screen
         mvprintw(0, 0, "Welcome to Task Manager MVP!");
         mvprintw(1, 0, "Press 'q' to quit.");
-        ui.displayMainMenu(); // Display the main menu
+        ui.displayMainMenu(currentTask); // Display the main menu with the current task highlighted
         refresh(); // Refresh the screen to show changes
 
-        int ch = getch(); // Get user input
+        ch = getch(); // Get user input
         switch (ch) {
             case 'q':
                 running = false; // Exit the loop
+                break;
+            case KEY_UP:
+                if (currentTask > 0) {
+                    currentTask--; // Move cursor up
+                }
+                break;
+            case KEY_DOWN:
+                if (currentTask < static_cast<int>(taskManager.dailyTasks.size()) - 1) {
+                    currentTask++; // Move cursor down
+                }
+                break;
+            case ' ': // Space bar to toggle task completion
+                taskManager.toggleTaskCompletion(currentTask);
                 break;
             // Other cases for user interactions will be added here
         }

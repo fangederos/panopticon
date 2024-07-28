@@ -3,8 +3,7 @@
 
 class UI {
 public:
-    void displayMainMenu(); // Function to display the main menu
+    void displayMainMenu(int currentTask); // Function to display the main menu with the current task highlighted
 };
 
 #endif // UI_H
-

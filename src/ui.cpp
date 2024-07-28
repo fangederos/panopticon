@@ -1,12 +1,17 @@
 #include "ui.h"
+#include "task_manager.h"
 #include <ncurses.h>
 
+extern TaskManager taskManager; // Declare an external taskManager object
+
 // Function to display the main menu
-void UI::displayMainMenu() {
+void UI::displayMainMenu(int currentTask) {
     mvprintw(2, 0, "Daily Tasks:");
-    // Display tasks (this will be updated to display actual tasks)
-    mvprintw(3, 0, "[ ] Task 1");
-    mvprintw(4, 0, "[ ] Task 2");
-    mvprintw(5, 0, "[ ] Task 3");
+    // Display tasks with the current task highlighted and completion status
+    for (size_t i = 0; i < taskManager.dailyTasks.size(); ++i) {
+        std::string taskDisplay = taskManager.dailyTasks[i].completed ? "[X] " : "[ ] ";
+        taskDisplay += taskManager.dailyTasks[i].description;
+        mvprintw(3 + i, 0, currentTask == static_cast<int>(i) ? "> %s" : "  %s", taskDisplay.c_str());
+    }
     refresh(); // Refresh the screen to show changes
 }
