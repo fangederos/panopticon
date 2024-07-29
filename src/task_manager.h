@@ -11,15 +11,14 @@ public:
         bool completed;
     };
 
-    std::vector<Task> dailyTasks = {
-        {"Task 1", false},
-        {"Task 2", false},
-        {"Task 3", false}
-    };
+    std::vector<Task> dailyTasks;
+    std::vector<Task> dayDependentTasks;
+    std::vector<Task> weeklyTasks;
+    std::vector<Task> monthlyTasks;
 
     void toggleTaskCompletion(int index);
-
-    // Other functions to manage tasks will be added here
+    void saveTasks(); // Add this line
+    void removeTask(int index); // Add this line
 };
 
 #endif // TASK_MANAGER_H

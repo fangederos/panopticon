@@ -1,8 +1,19 @@
 #include "ui.h"
 #include "task_manager.h"
 #include <ncurses.h>
+#include <string>
 
 extern TaskManager taskManager; // Declare an external taskManager object
+
+// Function to add a task
+void UI::addTask() {
+    echo(); // Enable echoing of typed characters
+    char taskDescription[256];
+    mvprintw(10, 0, "Enter task description: ");
+    getnstr(taskDescription, 255);
+    noecho(); // Disable echoing
+    taskManager.dailyTasks.push_back({std::string(taskDescription), false}); // Use taskManager object
+}
 
 // Function to display the main menu
 void UI::displayMainMenu(int currentTask) {

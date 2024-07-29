@@ -27,7 +27,8 @@ int main() {
         mvprintw(0, 0, "Welcome to Task Manager MVP!");
         mvprintw(1, 0, "Use the arrow keys to move between tasks");
         mvprintw(2, 0, "Press 'SPACE' to checkmark boxes.");
-        mvprintw(3, 0, "Press 'q' to quit.");
+        mvprintw(3, 0, "Press 'a' to add a task, 'd' to delete a task, 'q' to quit.");
+        mvprintw(4, 0, "Press 'TAB' to switch sections.");
 
         ui.displayMainMenu(currentTask); // Display the main menu with the current task highlighted
         refresh(); // Refresh the screen to show changes
@@ -50,11 +51,25 @@ int main() {
             case ' ': // Space bar to toggle task completion
                 taskManager.toggleTaskCompletion(currentTask);
                 break;
-            // Other cases for user interactions will be added here
+            case 'a': // 'a' to add a task
+                ui.addTask();
+                break;
+            case 'd': // 'd' to delete a task
+                taskManager.removeTask(currentTask);
+                if (currentTask >= static_cast<int>(taskManager.dailyTasks.size())) {
+                    currentTask--;
+                }
+                break;
+            case '\t': // TAB to switch sections
+                // currentSection = static_cast<Section>((currentSection + 1) % 4); // Uncomment if section switching is implemented
+                currentTask = 0;
+                break;
+            // Other cases for user interactions
         }
     }
 
     // End ncurses mode
     endwin();
+    taskManager.saveTasks(); // Save tasks to file
     return 0;
 }
